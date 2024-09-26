@@ -130,3 +130,71 @@ ZoneID:代表时区ID，用州名/城市，或者国家/城市，例如Asia/Shan
 > Instant对象可以拿到此刻的时间，即从1970-1-1 0.0.0 开始到此刻的`秒数`以及不够一秒的`纳秒`，更好用，可以替代Date
 
 > 相比与LocalDateTime，Instant关键在于可以获取总秒数
+
+
+## DataTimeFormatter
+
+
+> 格式化器，对时间进行格式化和解析
+
+
+    public static void main(String[] args) {
+        // 1. create object
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // 2. format
+        LocalDateTime ldt = LocalDateTime.now();
+        System.out.println(ldt);
+
+        String rs = formatter.format(ldt);  //use formatter to format
+        System.out.println(rs);
+
+        //3. another scheme
+
+        String rs2 = ldt.format(formatter); //use time to format
+        System.out.println(rs2);
+
+        //4. 解析时间一般通过LocalDateTime提供的解析方法来解析时间
+        String data = "2029-12-12 12:12:12";
+
+        LocalDateTime ldt2 = LocalDateTime.parse(data, formatter);
+        System.out.println(ldt2);
+    }
+
+
+## Period and Duration
+
+> Period 用来计算日期间隔(年月日)， Duration(时分秒)
+
+> `Period`只能计算两个`LocalDate`对象的相差
+
+    public static void main(String[] args) {
+        // create period obj
+        LocalDate start = LocalDate.of(2029, 8, 10);
+        LocalDate end = LocalDate.of(2029,10 , 15);
+
+        Period period = Period.between(start, end);
+
+        // using period to get info
+        System.out.println(period.getYears());
+        System.out.println(period.getMonths());
+        System.out.println(period.getDays());
+
+
+    }
+
+-----------
+
+    public static void main(String[] args) {
+        //1. create duration obj
+        LocalDateTime start = LocalDateTime.of(2025, 11, 11, 11, 11, 11);
+        LocalDateTime end = LocalDateTime.of(2025, 10, 10, 10, 10, 10);
+        Duration duration = Duration.between(start, end);
+        
+        //2. get info
+        System.out.println(duration.toDays());
+        System.out.println(duration.toHours());
+        System.out.println(duration.toMillis());
+        System.out.println(duration.toSeconds());
+        System.out.println(duration.toMinutes());
+    }
